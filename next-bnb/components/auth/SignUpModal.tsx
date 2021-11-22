@@ -25,23 +25,68 @@ const Container = styled.form`
 `;
 
 const SignUpModal: React.FC = () => {
+  const [email, setEmail] = useState("");
+  const [lastname, setLastname] = useState("");
+  const [firstname, setFirstname] = useState("");
+  const [password, setPassword] = useState("");
+
+  // 이메일 주소 변경 시
+  const onChangeEmail = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setEmail(event.target.value);
+  };
+
+  // 이름 변경 시
+  const onChangeLastname = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setLastname(event.target.value);
+  };
+
+  // 성 변경 시
+  const onChangeFirstname = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setFirstname(event.target.value);
+  };
+
+  // 비밀번호 변경 시
+  const onChangePassword = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setPassword(event.target.value);
+  };
+
   return (
     <Container>
       <div className="input-wrapper">
-        <Input placeholder="이메일 주소" type="email" icon={<Mailcon />} />
-        {/* input 이 아닌 Input 으로 컴포넌트화 된 것에 주의 */}
+        <Input
+          type="email"
+          name="email"
+          placeholder="이메일 주소"
+          icon={<Mailcon />}
+          value={email}
+          onChange={onChangeEmail}
+        />
       </div>
       <div className="input-wrapper">
-        <Input placeholder="이름(예: 길동)" icon={<PersonIcon />} />
+        <Input
+          name="lastname"
+          placeholder="이름(예: 길동)"
+          icon={<PersonIcon />}
+          value={lastname}
+          onChange={onChangeLastname}
+        />
       </div>
       <div className="input-wrapper">
-        <Input placeholder="성(예: 홍)" icon={<PersonIcon />} />
+        <Input
+          name="firstname"
+          placeholder="성(예: 홍)"
+          icon={<PersonIcon />}
+          value={firstname}
+          onChange={onChangeFirstname}
+        />
       </div>
       <div className="input-wrapper">
         <Input
           placeholder="비밀번호 설정하기"
           type="password"
           icon={<OpenedEyeIcon />}
+          value={password}
+          onChange={onChangePassword}
         />
       </div>
     </Container>
