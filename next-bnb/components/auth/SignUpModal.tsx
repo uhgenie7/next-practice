@@ -6,6 +6,8 @@ import PersonIcon from "../../public/static/svg/auth/person.svg";
 import OpenedEyeIcon from "../../public/static/svg/auth/opened-eye.svg";
 import CloseEyeIcon from "../../public/static/svg/auth/closed_eye.svg";
 import Input from "../common/Input";
+import Selector from "../common/Selector";
+import { dayList, monthList, yearList } from "../../lib/staticData";
 
 const Container = styled.form`
   padding: 32px;
@@ -21,6 +23,17 @@ const Container = styled.form`
   .input-wrapper {
     position: relative;
     margin-bottom: 16px;
+  }
+
+  .sign-up-birthdat-label {
+    font-size: 16px;
+    font-weight: 600;
+    margin-top: 16px;
+    margin-bottom: 8px;
+  }
+  .sign-up-modal-birthday-info {
+    margin-bottom: 16px;
+    color: ${palette.charcoal};
   }
 `;
 
@@ -101,6 +114,16 @@ const SignUpModal: React.FC = () => {
           onChange={onChangePassword}
         />
       </div>
+      <p className="sign-up-birthdat-label">생일</p>
+      <p className="sign-up-modal-birthday-info">
+        만 18세 이상의 성인만 회원으로 가입할 수 있습니다. 생일은 다른
+        에어비엔비 이용자에게 공개되지 않습니다.
+      </p>
+      <Selector
+        options={monthList}
+        disabledOptions={["월"]}
+        defaultValue="월"
+      />
     </Container>
   );
 };
