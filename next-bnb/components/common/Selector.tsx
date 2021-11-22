@@ -1,0 +1,47 @@
+/* eslint-disable indent */
+import React from "react";
+import styled, { css } from "styled-components";
+import palette from "../../styles/palette";
+import WarningIcon from "../../public/static/svg/common/warning.svg";
+
+const Container = styled.div`
+  select {
+    width: 100%;
+    height: 100%;
+    background-color: white;
+    border: 1px solid ${palette.gray_eb};
+    padding: 0 11px;
+    border-radius: 4px;
+    outline: none;
+    --webkit-appearance: none;
+    background-image: url("/static/svg/selector/disabled_register_selector_down_arrow.svg");
+    background-position: right 11px center;
+    background-repeat: no-repeat;
+    font-size: 16px;
+
+    &:focus {
+      border-color: ${palette.dark_cyan};
+    }
+  }
+`;
+
+interface IProps extends React.SelectHTMLAttributes<HTMLSelectElement> {
+  options?: string[];
+  value?: string;
+}
+
+const Selector: React.FC<IProps> = ({ options = [], ...props }) => {
+  return (
+    <Container>
+      <select {...props}>
+        {options.map((option, index) => (
+          <option key={index} value={option}>
+            {option}
+          </option>
+        ))}
+      </select>
+    </Container>
+  );
+};
+
+export default Selector;
