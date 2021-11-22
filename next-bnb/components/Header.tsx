@@ -136,6 +136,8 @@ const Container = styled.div`
 `;
 
 const Header: React.FC = () => {
+  const { openModal, closeModal, ModalPortal } = useModal();
+
   return (
     <Container>
       <Link href="/">
@@ -145,13 +147,24 @@ const Header: React.FC = () => {
         </a>
       </Link>
       <div className="header-auth-buttons">
-        <button type="button" className="header-sign-up-button">
+        <button
+          type="button"
+          className="header-sign-up-button"
+          onClick={openModal}
+        >
           회원가입
         </button>
         <button type="button" className="header-sign-up-button">
           로그인
         </button>
       </div>
+
+      {/* {!isLogged && <HeaderAuths />}
+      {isLogged && <HeaderUserProfile />} */}
+
+      <ModalPortal>
+        <SignUpModal />
+      </ModalPortal>
     </Container>
   );
 };
