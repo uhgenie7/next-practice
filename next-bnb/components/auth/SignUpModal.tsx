@@ -7,6 +7,7 @@ import OpenedEyeIcon from "../../public/static/svg/auth/opened-eye.svg";
 import CloseEyeIcon from "../../public/static/svg/auth/closed_eye.svg";
 import Input from "../common/Input";
 import Selector from "../common/Selector";
+import Button from "../common/Button";
 import { dayList, monthList, yearList } from "../../lib/staticData";
 
 const Container = styled.form`
@@ -50,6 +51,12 @@ const Container = styled.form`
     .sign-up-modal-birthday-year-selector {
       width: 33.3333%;
     }
+  }
+
+  .sign-up-modal-submit-button-wrapper {
+    margin-bottom: 16px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid ${palette.gray_eb};
   }
 `;
 
@@ -182,6 +189,9 @@ const SignUpModal: React.FC = () => {
             value={birthYear}
           />
         </div>
+      </div>
+      <div className="sign-up-modal-submit-button-wrapper">
+        <Button type="submit">가입하기</Button>
       </div>
     </Container>
   );
