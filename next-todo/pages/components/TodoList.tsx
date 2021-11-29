@@ -184,6 +184,7 @@ const Container = styled.div`
         .todo-trash-can {
           path {
             fill: ${palette.deep_red};
+            //path 엘리먼트는 선, 곡선, 호 등 다양한 형태를 그릴 수 있음. path엘리먼트의 fill 을 이용하여 색상 바꿈 가능.
           }
         }
         .todo-check-mark {
