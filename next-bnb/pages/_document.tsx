@@ -10,11 +10,11 @@ import { ServerStyleSheet } from "styled-components";
 export default class MyDocument extends Document {
   static async getInitialProps(ctx: DocumentContext) {
     const sheet = new ServerStyleSheet();
-    const originalRenderpage = ctx.renderPage;
+    const originalRenderPage = ctx.renderPage;
 
     try {
       ctx.renderPage = () =>
-        originalRenderpage({
+        originalRenderPage({
           enhanceApp: (App) => (props) =>
             sheet.collectStyles(<App {...props} />),
         });
@@ -34,17 +34,16 @@ export default class MyDocument extends Document {
       sheet.seal();
     }
   }
+
   render() {
     return (
       <Html>
         <Head>
+          <meta charSet="utf-8" />
+          <meta name="description" content="My First Static Website" />
+          <meta name="keywords" content="nextjs,static,website" />
           <link
-            href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap"
-            rel="stylesheet"
-          />
-          <link rel="preconnect" href="https://fonts.gstatic.com" />
-          <link
-            href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@1,400;1,700&display=swap"
+            href="https://fonts.googleapis.com/earlyaccess/notosanskr.css"
             rel="stylesheet"
           />
         </Head>

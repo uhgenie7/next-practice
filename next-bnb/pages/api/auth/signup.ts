@@ -1,10 +1,12 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { StoredUserType } from "../../../types/user";
 import bcrypt from "bcryptjs";
-import Data from "../../../lib/data/index";
+import jwt from "jsonwebtoken";
+import Data from "../../../lib/data";
+import { StoredUserType } from "types/user";
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default async (req: NextApiRequest, res: NextApiResponse) => {
+  // 계정 생성하기
   if (req.method === "POST") {
     const { email, firstname, lastname, password, birthday } = req.body;
 
@@ -16,19 +18,20 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     const userExist = Data.user.exist({ email });
 
     if (userExist) {
-      res.statusCode = 405;
+      res.statusCode = 409;
       res.send("이미 가입된 이메일입니다.");
     }
 
+    const hashedPassword = bcrypt.hashSync(password, 8);
+
     const users = Data.user.getList();
     let userId;
+
     if (users.length === 0) {
       userId = 1;
     } else {
       userId = users[users.length - 1].id + 1;
     }
-
-    const hashedPassword = bcrypt.hashSync(password, 8);
 
     const newUser: StoredUserType = {
       id: userId,
@@ -37,10 +40,26 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       lastname,
       password: hashedPassword,
       birthday,
-      profileImage: "/static/image/default_user_profile_image.jpg",
+      profileImage: "/static/image/user/default_user_profile_image.jpg",
     };
 
     Data.user.write([...users, newUser]);
+
+    const token = jwt.sign(String(newUser.id), process.env.JWT_SECRET!);
+
+    res.setHeader(
+      "Set-Cookie",
+      `access_token=${token}; Path=/; Expires=${new Date(
+        Date.now() + 60 * 60 * 24 * 1000 * 3 //3일
+      )}; httponly`
+    );
+
+    const newUserWithoutPassword: Partial<Pick<StoredUserType, "password">> =
+      newUser;
+
+    delete newUserWithoutPassword.password;
+    res.statusCode = 200;
+    return res.send(newUser);
   }
 
   res.statusCode = 405;
