@@ -2,33 +2,23 @@ import React from "react";
 import { GetServerSideProps, NextPage } from "next";
 import TodoList from "./components/TodoList";
 import { TodoType } from "../types/todo";
-import axios from "axios";
+import { getTodosAPI } from "../lib/api/todo";
 
-const todos: TodoType[] = [
-  { id: 1, text: "마트 가서 장보기", color: "red", checked: false },
-  { id: 2, text: "수학 숙제하기", color: "orange", checked: true },
-  { id: 3, text: "코딩하기", color: "yellow", checked: false },
-  { id: 5, text: "요리 연습하기", color: "blue", checked: true },
-  { id: 6, text: "분리수거 하기", color: "navy", checked: false },
-  { id: 7, text: "할 일", color: "red", checked: false },
-  { id: 8, text: "할 일2", color: "orange", checked: false },
-];
+interface IProps {
+  todos: TodoType[];
+}
 
-const app: NextPage = () => {
+const app: NextPage<IProps> = ({ todos }) => {
   return <TodoList todos={todos} />;
-  // TodoList 컴포넌트가 props로 todos를 받기로 되어있지 않기 때문에 에러가 발생
 };
 
 export const getServerSideProps: GetServerSideProps = async () => {
   try {
-    const { data } = await axios.get<TodoType[]>(
-      "http://localhost:3001/api/todos"
-    );
-    console.log(data);
-    return { props: {} };
+    const { data } = await getTodosAPI();
+    return { props: { todos: data } };
   } catch (e) {
     console.log(e);
-    return { props: {} };
+    return { props: { todos: [] } };
   }
 };
 
