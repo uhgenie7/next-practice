@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { TodoType } from "../../types/todo";
 import fs from "fs";
+import { TodoType } from "../../types/todo";
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default async (req: NextApiRequest, res: NextApiResponse) => {
@@ -9,7 +9,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     try {
       const todos = await new Promise<TodoType[]>((resolve, reject) => {
         //   fs.readFile은 비동기함수, Promise를 이용하여 파일을 불러오는 것을 기다림.결과값으로 TodoType[]의 타입을 가진 todos를 리턴한다.
-        fs.readFile("/data/todos.json", (err: any, data: any) => {
+        fs.readFile("/data/todos.json", (err, data) => {
           // fs.readFile은 첫 번째 인자로 데이터를 불러올 파일의 경로를 받음, 두 번째 인자로 콜백을 받음. 콜백은 에러값과 데이터값을 받음.
           if (err) {
             return reject(err.message);
