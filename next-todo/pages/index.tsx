@@ -1,7 +1,8 @@
 import React from "react";
-import { NextPage } from "next";
+import { GetServerSideProps, NextPage } from "next";
 import TodoList from "./components/TodoList";
 import { TodoType } from "../types/todo";
+import axios from "axios";
 
 const todos: TodoType[] = [
   { id: 1, text: "마트 가서 장보기", color: "red", checked: false },
@@ -16,6 +17,19 @@ const todos: TodoType[] = [
 const app: NextPage = () => {
   return <TodoList todos={todos} />;
   // TodoList 컴포넌트가 props로 todos를 받기로 되어있지 않기 때문에 에러가 발생
+};
+
+export const getServerSideProps: GetServerSideProps = async () => {
+  try {
+    const { data } = await axios.get<TodoType[]>(
+      "http://localhost:3001/api/todos"
+    );
+    console.log(data);
+    return { props: {} };
+  } catch (e) {
+    console.log(e);
+    return { props: {} };
+  }
 };
 
 export default app;
