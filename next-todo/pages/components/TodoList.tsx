@@ -3,6 +3,9 @@ import styled from "styled-components";
 import palette from "../../styles/palette";
 import { TodoType } from "../../types/todo";
 
+import TrashCanIcon from "../../public/static/svg/trash_can.svg";
+import CheckMarkIcon from "../../public/static/svg/check_mark.svg";
+
 interface IProps {
   todos: TodoType[];
 }
@@ -62,6 +65,15 @@ const TodoList: React.FC<IProps> = ({ todos }) => {
               </p>
             </div>
             <div className="todo-right-side">
+              {todo.checked && (
+                <>
+                  <TrashCanIcon className="todo-trash-can" onClick={() => {}} />
+                  <CheckMarkIcon
+                    className="todo-check-mark"
+                    onClick={() => {}}
+                  />
+                </>
+              )}
               {!todo.checked && (
                 <button
                   type="button"
